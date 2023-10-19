@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class MainCharacterScript : MonoBehaviour
 
     float horizontal;
     float vertical;
+    float moveLimiter = 0.8f;
 
     public float runSpeed = 20.0f;
 
@@ -24,6 +26,11 @@ public class MainCharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (horizontal != 0 && vertical != 0)
+        {
+            horizontal *= moveLimiter;
+            vertical *= moveLimiter;
+        }
         body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
     }
 }
