@@ -10,29 +10,28 @@ public class CatsGachaManager : MonoBehaviour
     [SerializeField] private Transform parent, pos;
     [SerializeField] private GameObject catGachaGameObject;
 
-    GameObject catGacha;
+    public int testGoldCount;
+    public GameObject catGacha;
     CatsGacha cat;
 
     public void Gacha()
     {
-        if (catGacha == null)
+        catGacha = Instantiate(catGachaGameObject, pos.position, Quaternion.identity) as GameObject;
+        catGacha.transform.SetParent(parent);
+        catGacha.transform.localScale = new Vector3(1, 1, 1);
+        cat = catGacha.GetComponent<CatsGacha>();
+
+        int rnd = UnityEngine.Random.Range(1, 101);
+
+        for (int i = 0; i < gacha.Length; i++)
         {
-            catGacha = Instantiate(catGachaGameObject, pos.position, Quaternion.identity) as GameObject;
-            catGacha.transform.SetParent(parent);
-            catGacha.transform.localScale = new Vector3(1, 1, 1);
-            cat = catGacha.GetComponent<CatsGacha>();
-
-            int rnd = UnityEngine.Random.Range(1, 101);
-
-            for (int i = 0; i < gacha.Length; i++)
+            if (rnd <= gacha[i].rate)
             {
-                if (rnd <= gacha[i].rate)
-                {
-                    cat.cgi = Reward(gacha[i].rarity);
-                    return;
-                }
+                cat.cgi = Reward(gacha[i].rarity);
+                return;
             }
         }
+        
     }
 
     public int Rates(string rarity)
