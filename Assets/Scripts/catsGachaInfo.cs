@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new cat", menuName = "Cat")]
+[CreateAssetMenu(fileName = "New Cat", menuName = "Cat")]
 public class catsGachaInfo : ScriptableObject
 {
     public Sprite image;

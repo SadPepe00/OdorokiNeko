@@ -1,22 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Unity.VisualScripting;
 
 public class CatsGachaManager : MonoBehaviour
 {
     [SerializeField] private CatsGachaRate[] gacha;
     [SerializeField] private Transform parent, pos;
-    [SerializeField] private GameObject catGachaGameObject;
+    [SerializeField] public GameObject catGachaGameObject;
 
     public int testGoldCount;
     public GameObject catGacha;
-    CatsGacha cat;
+    public CatsGacha cat;
+    public string catName;
 
     public void Gacha()
     {
-        catGacha = Instantiate(catGachaGameObject, pos.position, Quaternion.identity) as GameObject;
+        catGacha = Instantiate(catGachaGameObject, pos.position, Quaternion.identity);
         catGacha.transform.SetParent(parent);
         catGacha.transform.localScale = new Vector3(1, 1, 1);
         cat = catGacha.GetComponent<CatsGacha>();
@@ -28,6 +28,7 @@ public class CatsGachaManager : MonoBehaviour
             if (rnd <= gacha[i].rate)
             {
                 cat.cgi = Reward(gacha[i].rarity);
+                catName = cat.cgi.name;
                 return;
             }
         }
@@ -53,7 +54,7 @@ public class CatsGachaManager : MonoBehaviour
         catsGachaInfo[] reward = cgr.reward;
 
         int rnd = UnityEngine.Random.Range(0, reward.Length);
-        
+       
         return reward[rnd];
     }
 }
