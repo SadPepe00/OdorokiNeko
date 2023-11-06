@@ -8,23 +8,19 @@ using UnityEngine.Rendering.VirtualTexturing;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
-public class SimpleMapDungeonWlakGenerator : MonoBehaviour
+public class SimpleMapDungeonWlakGenerator : AbstractDungeonGenerator
 {
-    [SerializeField]
-    protected Vector2Int startPosition = Vector2Int.zero;
     [SerializeField]
     private int iterations = 10;
     [SerializeField]
     public int walkLength = 10;
     [SerializeField]
     public bool startRandomlyEachIteration = true;
-    [SerializeField]
-    private TilemapVisulizer tilemapVisulizer;
 
-
-    public void RunProceduralGeneration()
+    protected override void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk();
+        tilemapVisulizer.Clear();
         tilemapVisulizer.PaintFloorTiles(floorPositions);
     }
 
