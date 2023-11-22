@@ -1,61 +1,59 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-    public Transform player;
-    public float chaseRange = 5f;
-    public float attackRange = 2f;
+    public float slowMoveSpeed = 2f;
+    public float chaseMoveSpeed = 4f;
+    public float slowChaseRange = 5f;
+    public float fastChaseRange = 2f;
+    public float damage = 10f;
 
-    public float moveSpeed = 3f;
-    public float attackSpeed = 6f;
+    private Transform player;
+    private Rigidbody2D rb;
 
-    private bool isChasing = false;
-
-    [SerializeField]
-    private GameObject enemyGm;
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (distanceToPlayer < chaseRange)
+        if (distanceToPlayer <= fastChaseRange)
         {
-            isChasing = true;
-            ChasePlayer();
+            MoveTowardsPlayer(chaseMoveSpeed);
         }
-        else
+        else if (distanceToPlayer <= slowChaseRange)
         {
-            isChasing = false;
-        }
-
-        if (isChasing && distanceToPlayer < attackRange)
-        {
-            AttackPlayer();
-        }
-        if (distanceToPlayer < 0.5)
-        {
-            Destroy(enemyGm);
-            Debug.Log("Boom!");
+            MoveTowardsPlayer(slowMoveSpeed);
         }
     }
 
-    void ChasePlayer()
+    void MoveTowardsPlayer(float speed)
     {
         Vector2 direction = (player.position - transform.position).normalized;
-
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + direction * speed * Time.deltaTime);
     }
 
-    void AttackPlayer()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        Vector2 direction = (player.position - transform.position).normalized;
-
-        transform.Translate(direction * attackSpeed * Time.deltaTime);
-
-        
-       
+        if (other.CompareTag("Bullet"))
+        {
+            // Обработка столкновения с пулей или игроком
+            Destroy(gameObject);
+        }
+        if (other.CompareTag("Player"))
+        {
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                // Вызываем метод TakeDamage у скрипта PlayerHealth
+                playerHealth.TakeDamage(damage);
+                // Уничтожаем врага
+                Destroy(gameObject);
+            }
+        }
     }
-
 }
