@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e69a57d1e7bb54fa466e6749fd17ef, type: 3}
   m_Name: Wooden Frame
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  name: 
+  image: {fileID: 21300000, guid: c3edd34f1e7b75445b0c36f799da4180, type: 3}
+  name: Non-Legendary

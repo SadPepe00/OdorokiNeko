@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e69a57d1e7bb54fa466e6749fd17ef, type: 3}
   m_Name: Golden Frame
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  name: 
+  image: {fileID: 21300000, guid: ad952af2ef825104ab3de5fcb9a1fc72, type: 3}
+  name: Legendary
