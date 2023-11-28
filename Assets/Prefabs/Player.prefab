@@ -30,10 +30,11 @@ Transform:
   m_GameObject: {fileID: 5340525616599126343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1972008762585409449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &5991195632075132120
@@ -44,7 +45,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5340525616599126343}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -62,7 +63,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &7088805207508379354
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -127,11 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c8ef9f3b7d8ac4ea543fcc093c501a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  bulletPrefab: {fileID: 8939363075467232256, guid: 0796b0500b439924e88b2e43e7228553, type: 3}
-  firePoint: {fileID: 2757120250057105619}
-  bulletForce: 20
-  shootCooldown: 0.5
+  speed: 5
+  bullet: {fileID: 8939363075467232256, guid: 0796b0500b439924e88b2e43e7228553, type: 3}
+  firePoint: {fileID: 1972008762585409449}
+  fireRate: 0.5
 --- !u!61 &3665029354719425671
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -164,7 +164,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0135787055, y: 0.0035178065}
+  m_Offset: {x: -0.0135787055, y: -0.08924701}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -175,7 +175,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.17323728, y: 0.31296438}
+  m_Size: {x: 0.17323728, y: 0.12743475}
   m_EdgeRadius: 0
 --- !u!114 &6299117767545792535
 MonoBehaviour:
@@ -189,3 +189,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b103263b3cca5ba4bb7227752e251d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 50
+--- !u!1 &5876079399809705612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972008762585409449}
+  m_Layer: 0
+  m_Name: ShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1972008762585409449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876079399809705612}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.012, y: -0.004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2757120250057105619}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

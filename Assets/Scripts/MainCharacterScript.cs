@@ -3,63 +3,57 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public GameObject bulletPrefab;
-    public Transform firePoint;
-    public float bulletForce = 20f;
-    public float shootCooldown = 0.5f;
+    [SerializeField]
+    private float speed = 5f;
 
     private Rigidbody2D rb;
-    private Vector2 moveInput;
-    private Vector2 mousePos;
-    private bool canShoot = true;
+    private float mx;
+    private float my;
 
-    void Start()
+    private Vector2 mousePos;
+
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private Transform firePoint;
+    [SerializeField]
+    private float fireRate = 0.5f;
+    private float fireTimer;
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        // Получаем ввод от игрока
-        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        mx = Input.GetAxisRaw("Horizontal");
+        my = Input.GetAxisRaw("Vertical");
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Стрельба при нажатии левой кнопки мыши
-        if (Input.GetMouseButton(0) && canShoot)
+        float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x)*Mathf.Rad2Deg - 90f;
+
+        firePoint.transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+        if (Input.GetMouseButtonDown(0) && fireTimer <= 0f)
         {
-            StartCoroutine(Shoot());
+            Shoot();
+            fireTimer = fireRate;
+        }
+        else 
+        {
+            fireTimer -= Time.deltaTime;
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        // Перемещение игрока
-        if (moveInput != Vector2.zero)
-        {
-            rb.velocity = moveInput.normalized * moveSpeed;
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-        }
+        rb.velocity = new Vector2(mx, my).normalized*speed;
     }
 
-    IEnumerator Shoot()
+    private void Shoot()
     {
-        canShoot = false;
-
-        // Определяем направление от игрока к курсору
-        Vector2 shootDirection = (mousePos - (Vector2)transform.position).normalized;
-
-        // Создаем пулю и направляем ее в сторону курсора
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        bulletRb.AddForce(shootDirection * bulletForce, ForceMode2D.Impulse);
-
-        // Задержка перед следующим выстрелом
-        yield return new WaitForSeconds(shootCooldown);
-        canShoot = true;
-       Destroy(bullet);
+        Instantiate(bullet, firePoint.position,firePoint.rotation);
     }
 }
+    

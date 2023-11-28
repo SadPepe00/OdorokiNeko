@@ -94,7 +94,7 @@ public class NewBehaviourScript : SimpleRandomDungeonWalkGenerator
             {
                 position += Vector2Int.up;
             }
-            else if(destination.y<position.y) 
+            else if (destination.y < position.y)
             {
                 position += Vector2Int.down;
             }
@@ -114,6 +114,7 @@ public class NewBehaviourScript : SimpleRandomDungeonWalkGenerator
         }
         return corridor;
     }
+
 
     private Vector2Int FindClosestPointTo(Vector2Int currentRoomCentre, List<Vector2Int> roomCentres)
     {
