@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEditor;
-using Unity.VisualScripting;
 
 public class CatsGachaManager : MonoBehaviour
 {
@@ -13,6 +12,7 @@ public class CatsGachaManager : MonoBehaviour
     public GameObject catGacha;
     public CatsGacha cat;
     public string catName;
+    public string rateName;
 
     public void Gacha()
     {
@@ -28,6 +28,7 @@ public class CatsGachaManager : MonoBehaviour
             if (rnd <= gacha[i].rate)
             {
                 cat.cgi = Reward(gacha[i].rarity);
+                rateName = gacha[i].rarity;
                 catName = cat.cgi.name;
                 return;
             }

@@ -10,9 +10,11 @@ public class Pull : MonoBehaviour
 
     public List<string> collectionList;
 
+    public FrameManager fm;
+
     void Start()
     {
-        gm.testGoldCount = 100;
+        gm.testGoldCount = 1000;
         button.onClick.AddListener(OnClick);
     }
 
@@ -21,7 +23,9 @@ public class Pull : MonoBehaviour
         if (gm.testGoldCount > 10)
         {
             Destroy(gm.catGacha);
+            Destroy(fm.frame);
             gm.Gacha();
+            fm.ShowFrame();
 
             if (collectionList.Contains(gm.catName))
                 Debug.Log($"{gm.catName} is already in your collection!");
