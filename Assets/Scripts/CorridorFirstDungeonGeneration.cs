@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 {
@@ -15,10 +17,50 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
     private HashSet<Vector2Int> floorPositions, corridorPositions;
 
-
+    [SerializeField]
+    private GameObject mainCharacter;
+    [SerializeField]
+    private GameObject roomEnemy;
+    [SerializeField]
+    private GameObject roomCamera;
     protected override void RunProceduralGeneration()
     {
+        ClearEntities();
         CorridorFirstGeneration();
+        SpawnMainCharacter();
+        SpawnEnemies();
+        
+    }
+
+    private void ClearEntities()
+    {
+
+        GameObject[] targetEnemy = GameObject.FindGameObjectsWithTag("Enemy");
+        var targetPlayer = GameObject.FindWithTag("Player");
+        for (var i=0;i<targetEnemy.Length-1;i++)
+        {
+            DestroyImmediate(targetEnemy[i]);
+        }
+        DestroyImmediate(targetPlayer);
+    }
+
+    private void SpawnEnemies()
+    {
+        var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
+        var i = 0;
+        while (i != 6)
+        {
+            var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
+            Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+            i++;
+        }   
+    }
+    private void SpawnMainCharacter()
+    {
+        var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
+        var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
+        Instantiate(mainCharacter, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+        //Instantiate(roomCamera, new Vector3Int(position.x, position.y, -2), roomEnemy.transform.rotation);
     }
 
     private void CorridorFirstGeneration()

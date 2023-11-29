@@ -25,7 +25,6 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         // Вызываем этот метод при смерти
-        Debug.Log("Player died!");
         // Дополнительные действия при смерти игрока
         // Например, перезапуск уровня, отображение экрана смерти и т.д.
     }

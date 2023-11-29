@@ -19,15 +19,18 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        if (player != null)
+        {
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= fastChaseRange)
-        {
-            MoveTowardsPlayer(chaseMoveSpeed);
-        }
-        else if (distanceToPlayer <= slowChaseRange)
-        {
-            MoveTowardsPlayer(slowMoveSpeed);
+            if (distanceToPlayer <= fastChaseRange)
+            {
+                MoveTowardsPlayer(chaseMoveSpeed);
+            }
+            else if (distanceToPlayer <= slowChaseRange)
+            {
+                MoveTowardsPlayer(slowMoveSpeed);
+            }
         }
     }
 

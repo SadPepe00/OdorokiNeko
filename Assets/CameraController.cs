@@ -9,21 +9,24 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        GameObject targetObject = GameObject.FindGameObjectWithTag("Player");
-        target = targetObject.transform;
-
     }
 
     void FixedUpdate()
     {
-            // Calculate the desired position for the camera
+        FindPlayer();
+        if (target != null)
+        {
             Vector3 desiredPosition = target.position + offset;
-            // Set the camera's Z-coordinate to a fixed value
             desiredPosition.z = transform.position.z;
-            // Smoothly interpolate between the current camera position and the desired position
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-            // Set the camera position to the smoothed position
             transform.position = smoothedPosition;
+        }
+    }
+    private void FindPlayer()
+    {
+        GameObject targetObject = GameObject.FindGameObjectWithTag("Player");
+        if(targetObject!=null)
+            target = targetObject.transform;
     }
 }
 
