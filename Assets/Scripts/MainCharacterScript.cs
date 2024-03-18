@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private float mx;
     private float my;
 
+    private Animator animator;
+
     private Vector2 mousePos;
 
     [SerializeField]
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -48,12 +51,24 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (mx != 0 || my != 0)
+        {
+            animator.SetFloat("X", mx);
+            animator.SetFloat("Y", my);
+            animator.SetBool("IsWalking",true);
+            animator.SetBool("IsShooting", false);
+        }
+        else
+        {
+            animator.SetBool("IsWalking", false);
+        }
         rb.velocity = new Vector2(mx, my).normalized*speed;
     }
 
     private void Shoot()
     {
         Instantiate(bullet, firePoint.position,firePoint.rotation);
+        animator.SetBool("IsShooting", true);
     }
 }
     
