@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 {
@@ -23,6 +24,13 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     private GameObject roomEnemy;
     [SerializeField]
     private GameObject roomCamera;
+
+    private void Start()
+    {
+        tilemapVisulizer.Clear();
+        RunProceduralGeneration();
+    }
+
     protected override void RunProceduralGeneration()
     {
         ClearEntities();
@@ -47,20 +55,19 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     private void SpawnEnemies()
     {
         var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
-        var i = 0;
-        while (i != 6)
+        for(var i=0;i<6;i++)
         {
             var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
             Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
-            i++;
         }   
     }
     private void SpawnMainCharacter()
     {
         var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
         var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
-        Instantiate(mainCharacter, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+        Instantiate(mainCharacter, new Vector3Int(startPosition.x, startPosition.y, -1), roomEnemy.transform.rotation);
         //Instantiate(roomCamera, new Vector3Int(position.x, position.y, -2), roomEnemy.transform.rotation);
+        
     }
 
     private void CorridorFirstGeneration()
