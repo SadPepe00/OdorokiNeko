@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9503bff9fd74dc4a9ccdf01bd6a6d2d, type: 3}
-  m_Name: LazyDrawnCat
+  m_Name: Phantom
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 6a9861e85883d4141bc47bf7757221d9, type: 3}
-  name: Lazy Drawn Cat
+  image: {fileID: 21300000, guid: a38b79f011503a244bc440bb684cfedd, type: 3}
+  name: "\u0424\u0430\u043D\u0442\u043E\u043C\u043A\u0430"
