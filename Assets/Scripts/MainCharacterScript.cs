@@ -1,36 +1,74 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCharacterScript : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    Rigidbody2D body;
+    [SerializeField]
+    private float speed = 5f;
 
-    float horizontal;
-    float vertical;
-    float moveLimiter = 0.8f;
+    private Rigidbody2D rb;
+    private float mx;
+    private float my;
 
-    public float runSpeed = 20.0f;
+    private Animator animator;
 
-    void Start()
+    private Vector2 mousePos;
+
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private Transform firePoint;
+    [SerializeField]
+    private float fireRate = 0.5f;
+    private float fireTimer;
+
+    private void Start()
     {
-        body = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+        mx = Input.GetAxisRaw("Horizontal");
+        my = Input.GetAxisRaw("Vertical");
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x)*Mathf.Rad2Deg - 90f;
+
+        firePoint.transform.localRotation = Quaternion.Euler(0, 0, angle);
+
+        if (Input.GetMouseButtonDown(0) && fireTimer <= 0f)
+        {
+            Shoot();
+            fireTimer = fireRate;
+        }
+        else 
+        {
+            fireTimer -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (horizontal != 0 && vertical != 0)
+        if (mx != 0 || my != 0)
         {
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
+            animator.SetFloat("X", mx);
+            animator.SetFloat("Y", my);
+            animator.SetBool("IsWalking",true);
+            animator.SetBool("IsShooting", false);
         }
-        body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+        else
+        {
+            animator.SetBool("IsWalking", false);
+        }
+        rb.velocity = new Vector2(mx, my).normalized*speed;
+    }
+
+    private void Shoot()
+    {
+        Instantiate(bullet, firePoint.position,firePoint.rotation);
+        animator.SetBool("IsShooting", true);
     }
 }
+    

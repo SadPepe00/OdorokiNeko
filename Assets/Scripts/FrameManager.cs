@@ -1,7 +1,5 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FrameManager : MonoBehaviour
 {
@@ -30,18 +28,6 @@ public class FrameManager : MonoBehaviour
 
 
         return;
-        /*int rnd = UnityEngine.Random.Range(1, 101);
-
-        for (int i = 0; i < fr.Length; i++)
-        {
-            if (rnd <= fr[i].rate)
-            {
-                fs.fi = DefineFrame(fr[i].frameType);
-                frameName = fs.fi.name;
-                return;
-            }
-        }*/
-
     }
 
     FrameInfo DefineFrame(string rarity)

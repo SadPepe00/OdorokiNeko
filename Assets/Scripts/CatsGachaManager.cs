@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEditor;
 
 public class CatsGachaManager : MonoBehaviour
 {
@@ -57,22 +56,5 @@ public class CatsGachaManager : MonoBehaviour
         int rnd = UnityEngine.Random.Range(0, reward.Length);
        
         return reward[rnd];
-    }
-}
-
-[CustomEditor(typeof(CatsGachaManager))]
-public class CatsGachaEditor : Editor
-{
-    public int Common, Rare, Legendary;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        EditorGUILayout.Space();
-
-        CatsGachaManager cgm = (CatsGachaManager)target;
-
-        Common = EditorGUILayout.IntField("Common", (cgm.Rates("Common") - cgm.Rates("Rare")));
-        Rare = EditorGUILayout.IntField("Rare", (cgm.Rates("Rare") - cgm.Rates("Legendary")));
-        Legendary = EditorGUILayout.IntField("Legendary", (cgm.Rates("Legendary")));
     }
 }
