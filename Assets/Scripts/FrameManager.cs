@@ -12,11 +12,12 @@ public class FrameManager : MonoBehaviour
     public GameObject frame;
     public FrameScript fs;
     public string frameName;
+    public GameObject GachaSCENE;
 
     public void ShowFrame()
     {
         frame = Instantiate(frameGameObject, pos.position, Quaternion.identity);
-        frame.transform.SetParent(parent);
+        frame.transform.SetParent(GachaSCENE.transform);
         frame.transform.localScale = new Vector3(1, 1, 1);
         frameName = cgm.rateName;
         fs = frame.GetComponent<FrameScript>();

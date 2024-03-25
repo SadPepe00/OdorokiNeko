@@ -12,11 +12,12 @@ public class CatsGachaManager : MonoBehaviour
     public CatsGacha cat;
     public string catName;
     public string rateName;
+    public GameObject GachaSCENE;
 
     public void Gacha()
     {
         catGacha = Instantiate(catGachaGameObject, pos.position, Quaternion.identity);
-        catGacha.transform.SetParent(parent);
+        catGacha.transform.SetParent(GachaSCENE.transform);
         catGacha.transform.localScale = new Vector3(1, 1, 1);
         cat = catGacha.GetComponent<CatsGacha>();
 

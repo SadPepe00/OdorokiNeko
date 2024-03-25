@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bullet
   - Enemy
+  - UBun
+  - VBun
+  - Bun
   layers:
   - Default
   - TransparentFX
