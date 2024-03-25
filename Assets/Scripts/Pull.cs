@@ -8,9 +8,9 @@ public class Pull : MonoBehaviour
 
     public Button button;
 
-    public List<string> collectionList;
-
     public FrameManager fm;
+
+    public CollectionCheck colCheck;
 
     void Start()
     {
@@ -27,10 +27,13 @@ public class Pull : MonoBehaviour
             gm.Gacha();
             fm.ShowFrame();
 
-            if (collectionList.Contains(gm.catName))
+            if (colCheck.ListOfCatsThatYouHave.Contains(gm.catName))
                 Debug.Log($"{gm.catName} is already in your collection!");
             else
-                collectionList.Add(gm.catName);
+            {
+                colCheck.ListOfCatsThatYouHave.Add(gm.catName);
+            }
+                
 
             gm.testGoldCount -= 10;
         }
