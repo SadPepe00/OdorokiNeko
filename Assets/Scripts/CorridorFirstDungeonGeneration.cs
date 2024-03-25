@@ -23,7 +23,7 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     [SerializeField]
     private GameObject roomEnemy;
     [SerializeField]
-    private GameObject roomCamera;
+    private GameObject portal;
 
     private void Start()
     {
@@ -33,6 +33,7 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 
     protected override void RunProceduralGeneration()
     {
+        tilemapVisulizer.Clear();
         ClearEntities();
         CorridorFirstGeneration();
         SpawnMainCharacter();
@@ -45,29 +46,31 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 
         GameObject[] targetEnemy = GameObject.FindGameObjectsWithTag("Enemy");
         var targetPlayer = GameObject.FindWithTag("Player");
+        var targetPortal = GameObject.FindWithTag("Portal");
         for (var i=0;i<targetEnemy.Length-1;i++)
         {
-            DestroyImmediate(targetEnemy[i]);
+            Destroy(targetEnemy[i]);
         }
-        DestroyImmediate(targetPlayer);
+        Destroy(targetPortal);
+        Destroy(targetPlayer);
     }
 
     private void SpawnEnemies()
     {
         var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
-        for(var i=0;i<6;i++)
+        for (var i = 0; i < 10; i++)
         {
             var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
             Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
-        }   
+        }
+        var portal_position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
+        Instantiate(portal, new Vector3Int(portal_position.x, portal_position.y, -1), roomEnemy.transform.rotation);
     }
     private void SpawnMainCharacter()
     {
         var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
         var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
         Instantiate(mainCharacter, new Vector3Int(startPosition.x, startPosition.y, -1), roomEnemy.transform.rotation);
-        //Instantiate(roomCamera, new Vector3Int(position.x, position.y, -2), roomEnemy.transform.rotation);
-        
     }
 
     private void CorridorFirstGeneration()
