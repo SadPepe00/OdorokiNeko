@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 {
@@ -17,17 +18,12 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
     private HashSet<Vector2Int> floorPositions, corridorPositions;
 
-    private int floor;
-
     [SerializeField]
     private GameObject mainCharacter;
     [SerializeField]
     private GameObject roomEnemy;
     [SerializeField]
-<<<<<<< Updated upstream
     private GameObject roomCamera;
-=======
-    private GameObject portal;
 
     private void Start()
     {
@@ -35,61 +31,43 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
         RunProceduralGeneration();
     }
 
->>>>>>> Stashed changes
     protected override void RunProceduralGeneration()
     {
-        tilemapVisulizer.Clear();
         ClearEntities();
         CorridorFirstGeneration();
         SpawnMainCharacter();
-        SpawnEntities();
+        SpawnEnemies();
+        
     }
 
     private void ClearEntities()
     {
+
         GameObject[] targetEnemy = GameObject.FindGameObjectsWithTag("Enemy");
         var targetPlayer = GameObject.FindWithTag("Player");
-        var targetPortal = GameObject.FindWithTag("Portal");
         for (var i=0;i<targetEnemy.Length-1;i++)
         {
-            Destroy(targetEnemy[i]);
+            DestroyImmediate(targetEnemy[i]);
         }
-        Destroy(targetPortal);
-        Destroy(targetPlayer);
+        DestroyImmediate(targetPlayer);
     }
 
-    private void SpawnEntities()
+    private void SpawnEnemies()
     {
         var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
-<<<<<<< Updated upstream
-        var i = 0;
-        while (i != 6)
+        for(var i=0;i<6;i++)
         {
             var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
             Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
-            i++;
         }   
-=======
-        for(var i=0;i<10;i++)
-        {
-            var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
-            Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
-        }
-        var portal_position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
-        Instantiate(portal, new Vector3Int(portal_position.x, portal_position.y, -1), roomEnemy.transform.rotation);
->>>>>>> Stashed changes
     }
-
     private void SpawnMainCharacter()
     {
         var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
         var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
-<<<<<<< Updated upstream
-        Instantiate(mainCharacter, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+        Instantiate(mainCharacter, new Vector3Int(startPosition.x, startPosition.y, -1), roomEnemy.transform.rotation);
         //Instantiate(roomCamera, new Vector3Int(position.x, position.y, -2), roomEnemy.transform.rotation);
-=======
-        Instantiate(mainCharacter, new Vector3Int(startPosition.x, startPosition.y, -1), roomEnemy.transform.rotation); 
->>>>>>> Stashed changes
+        
     }
 
     private void CorridorFirstGeneration()

@@ -6,8 +6,6 @@ TagManager:
   tags:
   - Bullet
   - Enemy
-  - Portal
-  - DataManager
   layers:
   - Default
   - TransparentFX
