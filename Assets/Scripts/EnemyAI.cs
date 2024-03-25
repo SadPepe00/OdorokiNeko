@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     private Transform player;
     private Rigidbody2D rb;
 
-    void Start()
+    void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
