@@ -6,8 +6,9 @@ TagManager:
   tags:
   - Bullet
   - Enemy
-  - Portal
-  - DataManager
+  - UBun
+  - VBun
+  - Bun
   layers:
   - Default
   - TransparentFX
