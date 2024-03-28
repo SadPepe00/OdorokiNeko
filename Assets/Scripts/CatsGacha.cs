@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,10 +15,5 @@ public class CatsGacha : MonoBehaviour
             img.sprite = cgi.image;
             name.text = cgi.name;
         }
-    }
-
-    void Update()
-    {
-
     }
 }

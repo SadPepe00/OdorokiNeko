@@ -1,20 +1,21 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
-    public AudioMixer audioMixer;
 
     public Dropdown resolutionDropDown;
 
     Resolution[] resolutions;
 
+    private DataManager data_Manager;
 
     void Start ()
     {
+        data_Manager = FindObjectOfType<DataManager>();
+
         resolutions = Screen.resolutions;
 
         resolutionDropDown.ClearOptions();
@@ -50,7 +51,7 @@ public class Menu : MonoBehaviour
 
     public void SetVolume (float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
+        data_Manager.soud_volume = volume;
     }
 
 
