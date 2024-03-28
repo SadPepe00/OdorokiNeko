@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,10 +13,14 @@ public class Pull : MonoBehaviour
 
     public CollectionCheck colCheck;
 
+    private DataManager data_Manager;
+
     void Start()
     {
-        gm.testGoldCount = 1000;
+        data_Manager = FindObjectOfType<DataManager>();
+        //gm.testGoldCount = 1000;
         button.onClick.AddListener(OnClick);
+        gm.testGoldCount = data_Manager.player_money;
     }
 
     void OnClick()
@@ -27,15 +32,16 @@ public class Pull : MonoBehaviour
             gm.Gacha();
             fm.ShowFrame();
 
-            if (colCheck.ListOfCatsThatYouHave.Contains(gm.catName))
+            if (data_Manager.cat_collection[gm.catName])
                 Debug.Log($"{gm.catName} is already in your collection!");
             else
             {
-                colCheck.ListOfCatsThatYouHave.Add(gm.catName);
+                data_Manager.cat_collection[gm.catName] = true;
             }
                 
 
             gm.testGoldCount -= 10;
+            data_Manager.player_money -= 10;
         }
         else
         {
