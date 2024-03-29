@@ -17,7 +17,7 @@ public class PortalNextLevel : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (data_Manager.level_num != 6)
+            if (data_Manager.level_num != 10)
             {
                 transitionsScript.LoadNextScene("Level" + data_Manager.level_num);
                 data_Manager.level_num++;

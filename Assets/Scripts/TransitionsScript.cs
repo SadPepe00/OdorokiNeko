@@ -20,6 +20,7 @@ public class TransitionsScript : MonoBehaviour
     {
         //StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
         SceneManager.LoadScene(sceneName);
+        Debug.Log("NextScene");
         
     }
 

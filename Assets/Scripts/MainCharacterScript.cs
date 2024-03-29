@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,11 +22,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float fireRate = 0.5f;
     private float fireTimer;
+    private DataManager data_Manager;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        data_Manager = FindObjectOfType<DataManager>();
     }
 
     private void Update()
@@ -46,6 +49,11 @@ public class PlayerController : MonoBehaviour
         else 
         {
             fireTimer -= Time.deltaTime;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Menu");
+            data_Manager.level_num = 0;
         }
     }
 

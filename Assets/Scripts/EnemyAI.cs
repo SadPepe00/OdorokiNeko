@@ -10,11 +10,13 @@ public class EnemyController : MonoBehaviour
 
     private Transform player;
     private Rigidbody2D rb;
+    private DataManager data_Manager;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        data_Manager = FindObjectOfType<DataManager>();
     }
 
     void Update()
@@ -46,6 +48,7 @@ public class EnemyController : MonoBehaviour
         {
             // Обработка столкновения с пулей или игроком
             Destroy(gameObject);
+            data_Manager.player_money += 10;
         }
         if (other.CompareTag("Player"))
         {
