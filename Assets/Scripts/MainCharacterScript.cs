@@ -53,7 +53,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("Menu");
-            data_Manager.level_num = 0;
+            data_Manager.level_num = 2;
+            data_Manager.player_health = 10;
         }
     }
 

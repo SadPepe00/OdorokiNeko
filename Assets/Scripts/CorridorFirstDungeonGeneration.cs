@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
@@ -16,6 +17,7 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 
     private Dictionary<Vector2Int, HashSet<Vector2Int>> roomsDictionary = new Dictionary<Vector2Int, HashSet<Vector2Int>>();
     private HashSet<Vector2Int> floorPositions, corridorPositions;
+    private DataManager data_Manager;
 
     [SerializeField]
     private GameObject mainCharacter;
@@ -27,6 +29,18 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     private void Start()
     {
         tilemapVisulizer.Clear();
+        data_Manager = FindObjectOfType<DataManager>();
+
+        if (data_Manager.level_num == 2)
+        {
+            data_Manager.ChangeMusic("lvl");
+        }
+        
+        if (data_Manager.level_num == 11)
+        {
+            data_Manager.ChangeMusic("boss");
+        }
+
         RunProceduralGeneration();
     }
 
@@ -37,7 +51,6 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
         CorridorFirstGeneration();
         SpawnMainCharacter();
         SpawnEnemies();
-        
     }
 
     private void ClearEntities()
@@ -46,7 +59,7 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
         GameObject[] targetEnemy = GameObject.FindGameObjectsWithTag("Enemy");
         var targetPlayer = GameObject.FindWithTag("Player");
         var targetPortal = GameObject.FindWithTag("Portal");
-        for (var i=0;i<targetEnemy.Length-1;i++)
+        for (var i = 0; i < targetEnemy.Length - 1; i++)
         {
             Destroy(targetEnemy[i]);
         }
@@ -56,19 +69,33 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 
     private void SpawnEnemies()
     {
-        var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
-        for (var i = 0; i < 10; i++)
+        //var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
+        //for (var i = 0; i < 10; i++)
+        //{
+        //    var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
+        //    Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+        //}
+        //var portal_position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
+        //Instantiate(portal, new Vector3Int(portal_position.x, portal_position.y, -1), roomEnemy.transform.rotation);
+        //1 комната
+        //2 пол
+        for (var j = 0; j < 3; j++)
         {
-            var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
-            Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+            var rooms_to_spawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Key;
+            for (var i = 0; i < 5; i++)
+            {
+                var position = roomsDictionary[rooms_to_spawn].ElementAt(UnityEngine.Random.Range(0, roomsDictionary[rooms_to_spawn].Count));
+                Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+            }
         }
+        var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
         var portal_position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
         Instantiate(portal, new Vector3Int(portal_position.x, portal_position.y, -1), roomEnemy.transform.rotation);
     }
     private void SpawnMainCharacter()
     {
-        var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
-        var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
+        //var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;
+        //var position = roomFloorsToSpawn.ElementAt(UnityEngine.Random.Range(0, roomFloorsToSpawn.Count));
         Instantiate(mainCharacter, new Vector3Int(startPosition.x, startPosition.y, -1), roomEnemy.transform.rotation);
     }
 
@@ -83,7 +110,7 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
 
         List<Vector2Int> deadEnds = FindAllDeadEnds(floorPositions);
 
-        CreateRoomsAtDeadEnds(deadEnds,roomPositions);
+        CreateRoomsAtDeadEnds(deadEnds, roomPositions);
 
         floorPositions.UnionWith(roomPositions);
 
@@ -97,7 +124,7 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
         {
             if (!(roomFloors.Contains(position)))
             {
-                var room = RunRandomWalk(randomWalkParameters,position);
+                var room = RunRandomWalk(randomWalkParameters, position);
                 roomFloors.UnionWith(room);
             }
         }
@@ -127,13 +154,13 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
-        int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count*roomPercent);
+        int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count * roomPercent);
 
-        List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x=>Guid.NewGuid()).Take(roomToCreateCount).ToList();
+        List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
         ClearRoomData();
-        foreach (var roomPosition in roomsToCreate) 
+        foreach (var roomPosition in roomsToCreate)
         {
-            var roomFloor = RunRandomWalk(randomWalkParameters,roomPosition);
+            var roomFloor = RunRandomWalk(randomWalkParameters, roomPosition);
 
             SaveRoomData(roomPosition, roomFloor);
             roomPositions.UnionWith(roomFloor);

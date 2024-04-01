@@ -1,31 +1,39 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public float maxHealth = 100.0f;
 
-    private float currentHealth;
+    private int currentHealth;
+    private DataManager data_Manager;
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        data_Manager = FindObjectOfType<DataManager>();
+        currentHealth = data_Manager.player_health;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(int amount)
     {
-        // Вызываем этот метод при получении урона
         currentHealth -= amount;
+        data_Manager.player_health-=amount;
 
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        data_Manager.player_health += amount;
+    }
 
     private void Die()
     {
-        // Вызываем этот метод при смерти
-        // Дополнительные действия при смерти игрока
-        // Например, перезапуск уровня, отображение экрана смерти и т.д.
+        data_Manager.level_num = 2;
+        data_Manager.player_health = 10;
+        data_Manager.ChangeMusic("intro");
+        SceneManager.LoadScene("DeathScreen");
     }
 }

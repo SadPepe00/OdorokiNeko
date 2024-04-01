@@ -15,6 +15,7 @@ public class Menu : MonoBehaviour
     void Start ()
     {
         data_Manager = FindObjectOfType<DataManager>();
+        data_Manager.ChangeMusic("menu");
 
         resolutions = Screen.resolutions;
 
@@ -51,7 +52,7 @@ public class Menu : MonoBehaviour
 
     public void SetVolume (float volume)
     {
-        data_Manager.soud_volume = volume;
+        data_Manager.SetVolume(volume);
     }
 
 

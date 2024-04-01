@@ -26,7 +26,7 @@ public class Pull : MonoBehaviour
 
     void OnClick()
     {
-        if (!(gm.testGoldCount < 10))
+        if (!(gm.testGoldCount < 100))
         {
             gacha_anim.GetComponent<Animator>().Play("Pull");
             Destroy(gm.catGacha);
@@ -44,8 +44,8 @@ public class Pull : MonoBehaviour
             }
                 
 
-            gm.testGoldCount -= 10;
-            data_Manager.player_money -= 10;
+            gm.testGoldCount -= 100;
+            data_Manager.player_money -= 100;
         }
         else
         {

@@ -13,10 +13,49 @@ public class DataManager : MonoBehaviour
      {"Люцикот", false }, { "НекоАрк", false }, 
      {"Снежинка", false}, { "Уголек", false },
      {"Кошкодевочка", false}, { "Нян-Кэт", false }};
-    public float soud_volume = 0;
+    public AudioClip intro;
+    public AudioClip menu;
+    public AudioClip lvl;
+    public AudioClip boss;
+    public AudioSource music_controller;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        music_controller = gameObject.GetComponent<AudioSource>();
+    }
+    public void ChangeMusic(string state)
+    {
+        if (state == "menu")
+        {
+            music_controller.clip = menu;
+            music_controller.Play();
+            music_controller.loop = true;
+        }
+        if (state == "lvl")
+        {
+            music_controller.clip = lvl;
+            music_controller.Play();
+            music_controller.loop = true;
+        }
+        if (state == "boss")
+        {
+            music_controller.clip = boss;
+            music_controller.Play();
+            music_controller.loop = true;
+        }
+        if (state == "death")
+        {
+            music_controller.Stop();
+        }
+    }
+    public void SetVolume(float vol)
+    {
+        music_controller.volume = vol;
+    }
+
+    public void SetLoop(bool loop)
+    {
+        music_controller.loop = loop;
     }
 }

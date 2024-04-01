@@ -1,15 +1,15 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class EnemyController : MonoBehaviour
+public class BossController : MonoBehaviour
 {
     public float slowMoveSpeed = 2f;
     public float chaseMoveSpeed = 4f;
     public float slowChaseRange = 5f;
     public float fastChaseRange = 2f;
-    public int damage = 1;
+    public int damage = 2;
     public GameObject drop;
 
+    private int health = 10;
     private Transform player;
     private Rigidbody2D rb;
     private DataManager data_Manager;
@@ -20,10 +20,6 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
         data_Manager = FindObjectOfType<DataManager>();
-        if (data_Manager.level_num - 1 == 10)
-        {
-            Destroy(gameObject);
-        }
     }
 
     void Update()
@@ -53,13 +49,13 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            // Обработка столкновения с пулей или игроком
-            Destroy(gameObject);
-            if (UnityEngine.Random.Range(0, 100) < 30)
+            health--;
+            if (health==0)
             {
-                Instantiate(drop, new Vector3Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.y,-1),gameObject.transform.rotation);
+                Destroy(gameObject);
             }
-            data_Manager.player_money += 5;
+
+            data_Manager.player_money += 15;
         }
         if (other.CompareTag("Player"))
         {
@@ -68,8 +64,6 @@ public class EnemyController : MonoBehaviour
             {
                 // Вызываем метод TakeDamage у скрипта PlayerHealth
                 playerHealth.TakeDamage(damage);
-                // Уничтожаем врага
-                Destroy(gameObject);
             }
         }
     }

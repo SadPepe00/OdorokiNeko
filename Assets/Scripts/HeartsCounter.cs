@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelCounter : MonoBehaviour
+public class HeartsCounter : MonoBehaviour
 {
 
     private DataManager data_Manager;
@@ -15,6 +15,6 @@ public class LevelCounter : MonoBehaviour
 
     void Update()
     {
-        text_source.GetComponent<Text>().text = (data_Manager.level_num - 1).ToString();
+        text_source.GetComponent<Text>().text = (data_Manager.player_health).ToString();
     }
 }
