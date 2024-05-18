@@ -15,10 +15,13 @@ public class Pull : MonoBehaviour
 
     public GameObject gacha_anim;
 
+    public GameObject alreadyHaveDetector;
+
+    public GameObject NotReceivedDetector;
+
     void Start()
     {
         data_Manager = FindObjectOfType<DataManager>();
-        //gm.testGoldCount = 1000;
         button.onClick.AddListener(OnClick);
         gm.testGoldCount = data_Manager.player_money;
         
@@ -26,6 +29,7 @@ public class Pull : MonoBehaviour
 
     void OnClick()
     {
+        
         if (!(gm.testGoldCount < 100))
         {
             gacha_anim.GetComponent<Animator>().Play("Pull");
@@ -33,13 +37,20 @@ public class Pull : MonoBehaviour
             Destroy(fm.frame);
             gm.Gacha();
             fm.ShowFrame();
-            
 
 
-            if (data_Manager.cat_collection[gm.catName])
+
+            if (data_Manager.cat_collection[gm.catName]) 
+            {
                 Debug.Log($"{gm.catName} is already in your collection!");
+                NotReceivedDetector.SetActive(false);
+                alreadyHaveDetector.SetActive(true);
+
+            }
             else
             {
+                alreadyHaveDetector.SetActive(false);
+                NotReceivedDetector.SetActive(true);
                 data_Manager.cat_collection[gm.catName] = true;
             }
                 
