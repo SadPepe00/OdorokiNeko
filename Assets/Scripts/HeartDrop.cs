@@ -6,12 +6,12 @@ public class HeartDrop : MonoBehaviour
 {
 
     private Transform player;
-    private DataManager data_Manager;
+    private DataManager data_manager;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        data_Manager = FindObjectOfType<DataManager>();
+        data_manager = FindObjectOfType<DataManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -19,7 +19,10 @@ public class HeartDrop : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            playerHealth.Heal(1);
+            if (data_manager.chosen_cat["Кошкодевочка"] == true)
+                playerHealth.Heal(2);
+            else
+                playerHealth.Heal(1);
             Destroy(gameObject);
         }
     }

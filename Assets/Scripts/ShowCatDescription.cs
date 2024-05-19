@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class ShowCatDescription : MonoBehaviour
 {
-    [SerializeField] GameObject CatDescription;
+    [SerializeField] GameObject cat_description;
     void Start()
     {
-        CatDescription.SetActive(false);
+        cat_description.SetActive(false);
     }
 
     public void OnMouseOver()
     {
-        CatDescription.SetActive(true);
+        cat_description.SetActive(true);
     }
 
     public void OnMouseExit()
     {
-        CatDescription.SetActive(false);
+        cat_description.SetActive(false);
     }
+    
 }
