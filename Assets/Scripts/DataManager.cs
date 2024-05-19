@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class DataManager : MonoBehaviour
     public AudioClip lvl;
     public AudioClip boss;
     public AudioSource music_controller;
+    public Dictionary<string,bool> chosen_cat = new Dictionary<string, bool>(){{"Синнабон",false},{"Люцикот", false },{"Кошкодевочка", false}, { "Нян-Кэт", false }};
 
     private void Awake()
     {
@@ -68,5 +70,15 @@ public class DataManager : MonoBehaviour
      {"Люцикот", true }, { "НекоАрк", true },
      {"Снежинка", true}, { "Уголек", true },
      {"Кошкодевочка", true}, { "Нян-Кэт", true }};
+    }
+
+    public void EquipCat(string cat_name)
+    {
+        chosen_cat[cat_name] = true;
+    }
+
+    public void UnequipCat(string cat_name)
+    {
+        chosen_cat[cat_name] = false;
     }
 }
