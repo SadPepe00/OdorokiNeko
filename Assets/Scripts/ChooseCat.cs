@@ -15,7 +15,10 @@ public class ChooseCat : MonoBehaviour
     void Start()
     {
         data_Manager = FindObjectOfType<DataManager>();
-
+        if (data_Manager.chosen_cat[cat_name] == true)
+        {
+            check_mark_image.SetActive(true);
+        }
     }
 
     public void ClickedCat()
