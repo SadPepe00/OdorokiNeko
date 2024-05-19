@@ -25,6 +25,8 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
     private GameObject roomEnemy;
     [SerializeField]
     private GameObject portal;
+    [SerializeField]
+    private GameObject CursedRoomEnemy;
 
     private void Start()
     {
@@ -85,7 +87,14 @@ public class CorridorFirstRandomGenerator : SimpleRandomDungeonWalkGenerator
             for (var i = 0; i < 5; i++)
             {
                 var position = roomsDictionary[rooms_to_spawn].ElementAt(UnityEngine.Random.Range(0, roomsDictionary[rooms_to_spawn].Count));
-                Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+                if (data_Manager.chosen_cat["Синнабон"] == true)
+                {
+                    Instantiate(CursedRoomEnemy, new Vector3Int(position.x, position.y, -1), CursedRoomEnemy.transform.rotation);
+                }
+                else
+                {
+                    Instantiate(roomEnemy, new Vector3Int(position.x, position.y, -1), roomEnemy.transform.rotation);
+                }
             }
         }
         var roomFloorsToSpawn = roomsDictionary.ElementAt(UnityEngine.Random.Range(0, roomsDictionary.Count)).Value;

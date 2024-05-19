@@ -437,7 +437,7 @@ MonoBehaviour:
   mainCharacter: {fileID: 5340525616599126343, guid: bc4ad24bad97529429c7e1b0e63d1fc3, type: 3}
   roomEnemy: {fileID: 6004202370517900538, guid: e377f6d35df02eb43ac9ee32020f64da, type: 3}
   portal: {fileID: 303120529448458216, guid: 9594ad2ebe7c0214696cc2e97d444048, type: 3}
-  boss: {fileID: 5931211562507964952, guid: 0efa78f84ac8b8f489e479d92c94a366, type: 3}
+  CursedRoomEnemy: {fileID: 6004202370517900538, guid: efd9bab4dddb9ea42b0c2d80e76a3166, type: 3}
 --- !u!4 &1055502159
 Transform:
   m_ObjectHideFlags: 0

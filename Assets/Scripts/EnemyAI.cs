@@ -20,6 +20,12 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
         data_Manager = FindObjectOfType<DataManager>();
+
+        if (data_Manager.chosen_cat["Люцикот"] == true)
+        {
+            damage++;
+        }
+
         if (data_Manager.level_num - 1 == 10)
         {
             Destroy(gameObject);

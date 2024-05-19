@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         data_Manager = FindObjectOfType<DataManager>();
+        if (data_Manager.chosen_cat["Íÿí-Êýò"] == true)
+        { 
+            speed = 15f;
+        }
     }
 
     private void Update()

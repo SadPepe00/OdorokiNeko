@@ -24,11 +24,13 @@ public class ChooseCat : MonoBehaviour
         { 
             data_Manager.EquipCat(cat_name);
             check_mark_image.SetActive(true);
+            Equipflag = true;
         }
         else
         {
             data_Manager.UnequipCat(cat_name);
             check_mark_image.SetActive(false);
+            Equipflag = false;
         }
     }
 }
