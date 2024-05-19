@@ -58,4 +58,15 @@ public class DataManager : MonoBehaviour
     {
         music_controller.loop = loop;
     }
+
+    public void UnlockCats()
+    {
+        cat_collection = new Dictionary<string, bool>()
+    {{"Буханка", true },{"Синнабон",true},
+     {"Рыжик", true },{ "Печенька", true },
+     {"Снежок", true }, { "Фантомка", true },
+     {"Люцикот", true }, { "НекоАрк", true },
+     {"Снежинка", true}, { "Уголек", true },
+     {"Кошкодевочка", true}, { "Нян-Кэт", true }};
+    }
 }

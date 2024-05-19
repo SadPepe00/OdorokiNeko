@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level_num: 2
   player_health: 10
-  player_money: 1000
+  player_money: 100
   intro: {fileID: 8300000, guid: 992920e3fbdd6ae4db1d1e20889dae0f, type: 3}
   menu: {fileID: 8300000, guid: e711688d5db8dd143b7a95d5dd75d3e3, type: 3}
   lvl: {fileID: 8300000, guid: 005fded42349a7f47bb9b8e2bb4b6e89, type: 3}
